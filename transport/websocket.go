@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -64,7 +65,7 @@ func (ws *WebsocketConnection) GetMessage() (string, error) {
 		return "", errBadBuffer
 	}
 
-	text := string(data)
+	text := strings.TrimRight(string(data), "\n")
 	logging.Log().Debug("WebsocketConnection.GetMessage() text:", text)
 
 	// empty messages are not allowed
